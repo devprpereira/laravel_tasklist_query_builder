@@ -11,9 +11,7 @@ class TasksController extends Controller
 
     public function list()
     {
-
         $data = DB::select('SELECT * FROM tasks');
-
         return view('tasks.list', ['data' => $data]);
     }
 

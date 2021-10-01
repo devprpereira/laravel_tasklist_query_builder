@@ -16,32 +16,33 @@
         @endunableToLoad
     @endif
 
-    Tasks List: {{count($data)}} items <br />
-
     @if (count($data) >= 1)
+        Tasks List: {{ count($data) }} items <br />
         <ul>
 
             @foreach ($data as $tasks)
 
-                <li> Task ID #{{ $tasks->id }}
+                <li> Task ID #{{ $tasks->id }} - @if ($tasks->done === 0) Not Done @else Done @endif
                     <ul>
                         <li> {{ $tasks->title }} </li>
                         <li>
                             <a href=" {{ route('tasks.mark', ['id' => $tasks->id]) }} ">
                                 @if ($tasks->done === 0)
-                                    Marcar como feito
+                                    Mark as done
                                 @else
-                                    Desmarcar como feito
+                                    Unmark as done
                                 @endif
                             </a>
                         </li>
-                        <li> <a href=" {{ route('tasks.edit', $tasks->id) }}">Editar</a> </li>
-                        <li> <a href=" {{ route('tasks.delete', $tasks->id) }}">Excluir</a> </li>
+                        <li> <a href=" {{ route('tasks.edit', $tasks->id) }}">Edit</a> </li>
+                        <li> <a href=" {{ route('tasks.delete', $tasks->id) }}"
+                                onclick="return confirm('Are you sure to delete the task #' + {{ $tasks->id }}  + '?')">Delete</a>
+                        </li>
                     </ul>
                 </li><br />
             @endforeach
         </ul>
     @else
-        Não existe nenhuma tarefa para ser exibida atualmente.
+        Nothing to show now. Try <a href="{{ route('tasks.add') }}"> Add a new task </a>
     @endif
 @endsection

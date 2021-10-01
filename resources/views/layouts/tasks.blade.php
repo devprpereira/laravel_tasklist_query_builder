@@ -10,7 +10,7 @@
     <header>
         <ul>
             <li><a href="{{ route('tasks.list') }}">List tasks</a> </li>
-            <li><a href="{{ route('tasks.add')  }}">Add tasks</a> </li>
+            <li><a href="{{ route('tasks.add')  }}">Add task</a> </li>
         </ul>
         {{-- Rotas acima usando o ->name('nome') depois da definição da rota no arquivo de rotas --}}
 

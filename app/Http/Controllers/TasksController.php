@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
 {
+    private $inputError = ['inputError'=> 'Campo obrigatório'];
+
     public function list()
     {
 
@@ -23,11 +25,16 @@ class TasksController extends Controller
 
     public function addAction(Request $request)
     {
-        if($request->filled('title')) {
+        if ($request->filled('title')) {
             $this->title = $request->input('title');
             DB::insert('INSERT INTO tasks (title) VALUES (?)', [$this->title]);
 
-            return redirect()->route('tasks.list');
+            return redirect()->route('tasks.list')
+                ->with('savedSuccefully', 'Task added succefully.');
+        } else {
+
+            return redirect()->route('tasks.add')
+                ->with($this->inputError);
         }
     }
 

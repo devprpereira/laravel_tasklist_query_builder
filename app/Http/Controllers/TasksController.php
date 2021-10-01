@@ -40,12 +40,33 @@ class TasksController extends Controller
 
     public function edit($item)
     {
-        return view('tasks.edit', ['id' => $item]);
+        $task = $this->verifyTask($item);
+        if ($task !== false) {
+            return view(
+                'tasks.edit',
+                [
+                    'item' => $task[0]
+                ]
+            );
+        } else {
+            return redirect()
+                ->route('tasks.list')
+                ->with('unableToLoad', 'Não foi possível alterar o item de ID #' . $item);
+        };
     }
 
-    public function editAction($item)
+    public function editAction(Request $request, $item)
     {
-        return 'Aqui listou';
+
+        if ($request->filled('title')) {
+            DB::update('UPDATE tasks SET title = ? WHERE id = ?', [$request->title, $item]);
+            return redirect()
+                ->route('tasks.list')
+                ->with('savedSuccefully', 'Task #' . $item . ' updated succefully.');
+        } else {
+            return redirect()->route('tasks.edit', $item)
+                ->with($this->inputError);
+        }
     }
 
     public function delete($item)

@@ -15,7 +15,7 @@
         {{-- Rotas acima usando o ->name('nome') depois da definição da rota no arquivo de rotas --}}
 
     </header>
-    <h2>Você está em @yield('title')</h2>
+    <h2>You are in @yield('title')</h2>
     <section>
         @yield('content')
     </section>

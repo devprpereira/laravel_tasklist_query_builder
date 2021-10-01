@@ -78,4 +78,10 @@ class TasksController extends Controller
     {
         return 'Aqui listou';
     }
+
+    public function verifyTask($item)
+    {
+        $task = DB::select('SELECT * FROM tasks WHERE id = ?', [$item]);
+        return count($task) > 0 ? $task : false;
+    }
 }

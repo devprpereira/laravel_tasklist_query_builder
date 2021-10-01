@@ -83,9 +83,20 @@ class TasksController extends Controller
         };
     }
 
-    public function mark($item)
+    public function mark($id)
     {
-        return 'Aqui listou';
+        $task = $this->verifyTask($id);
+        if ($task !== false) {
+            DB::update('UPDATE tasks SET done = 1 - done WHERE id = ?', [$id]);
+
+            return redirect()
+                ->route('tasks.list')
+                ->with('savedSuccefully', 'Task #' . $id . ' has "done" updated succefully.');
+        } else {
+            return redirect()
+                ->route('tasks.list')
+                ->with('unableToLoad', 'Não foi possível alterar o item de ID #' . $id);
+        };
     }
 
     public function verifyTask($item)

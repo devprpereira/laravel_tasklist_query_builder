@@ -68,9 +68,19 @@ class TasksController extends Controller
         }
     }
 
-    public function delete($item)
+    public function delete($id)
     {
-        return view('tasks.delete', ['id' => $item]);
+        $task = $this->verifyTask($id);
+        if ($task !== false) {
+            DB::delete('DELETE FROM tasks WHERE id = ?', [$id]);
+            return redirect()
+                ->route('tasks.list')
+                ->with('savedSuccefully', 'Task #' . $id . ' removed succefully.');
+        } else {
+            return redirect()
+                ->route('tasks.list')
+                ->with('unableToLoad', 'Não foi possível remover o item de ID #' . $id);
+        };
     }
 
     public function mark($item)

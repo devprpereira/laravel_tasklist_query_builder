@@ -4,7 +4,19 @@
 
 @section('content')
 
-    Tasks List: <br />
+    @if (session('savedSuccefully'))
+        @savedSuccefully
+        {{ session('savedSuccefully') }}
+        @endsavedSuccefully
+    @endif
+
+    @if (session('unableToLoad'))
+        @unableToLoad
+        {{ session('unableToLoad') }}
+        @endunableToLoad
+    @endif
+
+    Tasks List: {{count($data)}} items <br />
 
     @if (count($data) >= 1)
         <ul>

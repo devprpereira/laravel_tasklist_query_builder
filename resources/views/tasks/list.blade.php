@@ -23,11 +23,11 @@
 
             @foreach ($data as $tasks)
 
-                <li> Task #{{ $tasks->id }}
+                <li> Task ID #{{ $tasks->id }}
                     <ul>
                         <li> {{ $tasks->title }} </li>
                         <li>
-                            <a href=" {{ route('tasks.mark', ['id' => $tasks->id])}} ">
+                            <a href=" {{ route('tasks.mark', ['id' => $tasks->id]) }} ">
                                 @if ($tasks->done === 0)
                                     Marcar como feito
                                 @else

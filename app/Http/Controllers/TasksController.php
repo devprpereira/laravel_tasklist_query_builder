@@ -37,9 +37,9 @@ class TasksController extends Controller
         }
     }
 
-    public function edit($item)
+    public function edit($id)
     {
-        $task = $this->verifyTask($item);
+        $task = $this->verifyTask($id);
         if ($task !== false) {
             return view(
                 'tasks.edit',
@@ -50,20 +50,20 @@ class TasksController extends Controller
         } else {
             return redirect()
                 ->route('tasks.list')
-                ->with('unableToLoad', 'Não foi possível alterar o item de ID #' . $item);
+                ->with('unableToLoad', 'Não foi possível alterar o item de ID #' . $id);
         };
     }
 
-    public function editAction(Request $request, $item)
+    public function editAction(Request $request, $id)
     {
 
         if ($request->filled('title')) {
-            DB::update('UPDATE tasks SET title = ? WHERE id = ?', [$request->title, $item]);
+            DB::update('UPDATE tasks SET title = ? WHERE id = ?', [$request->title, $id]);
             return redirect()
                 ->route('tasks.list')
-                ->with('savedSuccefully', 'Task #' . $item . ' updated succefully.');
+                ->with('savedSuccefully', 'Task #' . $id . ' updated succefully.');
         } else {
-            return redirect()->route('tasks.edit', $item)
+            return redirect()->route('tasks.edit', $id)
                 ->with($this->inputError);
         }
     }
@@ -99,9 +99,9 @@ class TasksController extends Controller
         };
     }
 
-    public function verifyTask($item)
+    public function verifyTask($id)
     {
-        $task = DB::select('SELECT * FROM tasks WHERE id = ?', [$item]);
+        $task = DB::select('SELECT * FROM tasks WHERE id = ?', [$id]);
         return count($task) > 0 ? $task : false;
     }
 }

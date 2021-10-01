@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
 {
-    private $inputError = ['inputError'=> 'Campo obrigatório'];
+    private $inputError = ['inputError' => 'Campo obrigatório'];
 
     public function list()
     {
@@ -15,7 +15,6 @@ class TasksController extends Controller
         $data = DB::select('SELECT * FROM tasks');
 
         return view('tasks.list', ['data' => $data]);
-
     }
 
     public function add()

@@ -16,8 +16,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('tasks.list');
 });
+
+Route::prefix('tasks')->group(function () {
+
+    Route::get('/', [TasksController::class, 'list'])->name('tasks.list'); //Screen of listing
+
+    Route::get('add', [TasksController::class, 'add'])->name('tasks.add'); //Screen of
+    Route::post('add', [TasksController::class, 'addAction']); //Action
+
+    Route::get('edit/{id}', [TasksController::class, 'edit'])->name('tasks.edit'); //Screen of
+    Route::post('edit/{id}', [TasksController::class, 'editAction']); //Action
+
+    Route::get('delete/{id}', [TasksController::class, 'delete'])->name('tasks.delete'); //Action
+
+    Route::get('mark/{id}', [TasksController::class, 'mark'])->name('tasks.mark'); //Mark as done or don't done
+});
+
 
 /*This route is an self made example of how simple routes works
 In this case, I'm using a get method, but also can be post, and others http verbs
@@ -60,33 +76,19 @@ interpolated in a var called $n, and that var can be used in route or sent to vi
 //     echo 'passou o parâmetro: ' . $n . ', mas entrou em algo e ainda passou uma string: ' . $s . ', pena que ' . $d;
 // })->name('minha-rota');
 
-Route::prefix('teste')->group(function () {
-    Route::get('/', function () {
-        return view('teste');
-    });
+// Route::prefix('teste')->group(function () {
+//     Route::get('/', function () {
+//         return view('teste');
+//     });
 
-    Route::get('{category}', function ($category) {
-        echo 'editando o artigo da categoria ' . $category;
-    });
+//     Route::get('{category}', function ($category) {
+//         echo 'editando o artigo da categoria ' . $category;
+//     });
 
 
-    //exemplo de rota com redirect para rota nomeada (da linha 57)
-    Route::get('teste2/numero', function () {
-        return redirect()->route('minha-rota');
-    });
-});
+//     //exemplo de rota com redirect para rota nomeada (da linha 57)
+//     Route::get('teste2/numero', function () {
+//         return redirect()->route('minha-rota');
+//     });
+// });
 
-Route::prefix('tasks')->group(function () {
-
-    Route::get('/', [TasksController::class, 'list'])->name('tasks.list'); //Screen of listing
-
-    Route::get('add', [TasksController::class, 'add'])->name('tasks.add'); //Screen of
-    Route::post('add', [TasksController::class, 'addAction']); //Action
-
-    Route::get('edit/{id}', [TasksController::class, 'edit'])->name('tasks.edit'); //Screen of
-    Route::post('edit/{id}', [TasksController::class, 'editAction']); //Action
-
-    Route::get('delete/{id}', [TasksController::class, 'delete'])->name('tasks.delete'); //Action
-
-    Route::get('mark/{id}', [TasksController::class, 'mark'])->name('tasks.mark'); //Mark as done or don't done
-});

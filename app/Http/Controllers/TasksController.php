@@ -22,9 +22,12 @@ class TasksController extends Controller
 
     public function addAction(Request $request)
     {
+
         $request->validate([
             'title' => ['required', 'string']
         ]);
+        $this->title = $request->input('title');
+        DB::insert('INSERT INTO tasks (title) VALUES (?)', [$this->title]);
 
         return redirect()->route('tasks.list')
             ->with('savedSuccefully', 'Task added succefully.');

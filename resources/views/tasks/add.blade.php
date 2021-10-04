@@ -12,9 +12,11 @@
                 <label for="title">Task Title</label>
                 <input type="text" name="title" id="title" maxlength="100" />
 
-                @if (session('inputError'))
+                @if ($errors->any())
                     @inputError
-                    {{ session('inputError') }}
+                    @foreach ($errors->all() as $error)
+                        {{$error}}
+                    @endforeach
                     @endinputError
                 @endif
             </div>

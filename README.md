@@ -6,6 +6,8 @@ For use this project, you need only to run your docker environment in the root o
 
 In this project I'm using PHP, Laravel, Docker, Artisan, Blade templates, Controllers, Views, Routes, Request Validation and Query Builder to interact with the database (who is MySQL).
 
+I made this branch only to preserve the QueryBuilder structure, because I'm doing this project in consonant to a course and in this course we'll change the way of manipulate our DB and I don't want to lose this way of manipulation.
+
 Soon as possible I'll include a migration to make the table needed to run this project, and you'll need only to run php artisan migrate and have this project running perfectly in your environment. I hope you can enjoy my project and if you want to contact me:
 
 * [LinkedIn] 

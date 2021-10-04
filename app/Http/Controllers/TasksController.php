@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
 {
-    private $inputError = ['inputError' => 'Campo obrigatório'];
+    private $inputError = ['inputError' => 'Required field'];
 
     public function list()
     {
@@ -22,17 +22,12 @@ class TasksController extends Controller
 
     public function addAction(Request $request)
     {
-        if ($request->filled('title')) {
-            $this->title = $request->input('title');
-            DB::insert('INSERT INTO tasks (title) VALUES (?)', [$this->title]);
+        $request->validate([
+            'title' => ['required', 'string']
+        ]);
 
-            return redirect()->route('tasks.list')
-                ->with('savedSuccefully', 'Task added succefully.');
-        } else {
-
-            return redirect()->route('tasks.add')
-                ->with($this->inputError);
-        }
+        return redirect()->route('tasks.list')
+            ->with('savedSuccefully', 'Task added succefully.');
     }
 
     public function edit($id)
@@ -55,15 +50,15 @@ class TasksController extends Controller
     public function editAction(Request $request, $id)
     {
 
-        if ($request->filled('title')) {
-            DB::update('UPDATE tasks SET title = ? WHERE id = ?', [$request->title, $id]);
-            return redirect()
-                ->route('tasks.list')
-                ->with('savedSuccefully', 'Task #' . $id . ' updated succefully.');
-        } else {
-            return redirect()->route('tasks.edit', $id)
-                ->with($this->inputError);
-        }
+        $request->validate([
+            'title' => ['required', 'string']
+        ]);
+
+        DB::update('UPDATE tasks SET title = ? WHERE id = ?', [$request->title, $id]);
+
+        return redirect()
+            ->route('tasks.list')
+            ->with('savedSuccefully', 'Task #' . $id . ' updated succefully.');
     }
 
     public function delete($id)
